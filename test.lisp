@@ -9,8 +9,8 @@
                                               (merge-pathnames "test-systems/"
                                                                base-dir))
                                         asdf:*central-registry*)))
-  (asdf:load-system "good-system")
-  (asdf:load-system "bad-system")
+  (asdf:load-system "good-system" :force t)
+  (asdf:load-system "bad-system" :force t)
   )
 
 (let ((test-results
