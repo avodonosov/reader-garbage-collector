@@ -1,20 +1,3 @@
-#|
-
-  ;; Do not pollute the system with symbols interned
-  ;; while READ'ing the DEFPACKAGE, without affecting
-  ;; human redability, as would happen if we
-  ;; prepended #: to every symbol.
-  (cl:defpackage #:cl+ssl-reader-garbage (:use))
-  (cl:in-package #:cl+ssl-reader-garbage)
-
-
-  ;; reader GC
-  (cl:in-package #:cl-user)
-  (eval-when (:load-toplevel :compile-toplevel :execute)
-    (delete-package '#:cl+ssl-reader-garbage)))
-
-|#
-
 (defpackage #:reader-gc
   (:export #:call-with-garbage-package
             #:call-with-garbage-package-named)
