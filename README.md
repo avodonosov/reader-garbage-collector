@@ -20,7 +20,7 @@ current package, or keyword package, with the symbols interned
 when reader reads the defpacakge / in-package froms.
 
 We could avoid this pollution while still keeping the usual (interned)
-sybmols could by switching to a temporary package while
+sybmols by switching to a temporary package while
 reading the forms:
 
 ```common-lisp
