@@ -115,7 +115,7 @@ by default.
 
 Another though. Maybe readability is so more important than pollution,
 that it's better to stick to usual symbols even without bothering
-for any anti-pollution measures. Especially taking into account
+for any anti-pollution measures. Especially that
 this pollution only happens when the system is compiled,
 i.e. loaded first time. Next time, when existing .fasl files
-are just loaded, the pollution does not happen.
+are just loaded without compilation, the pollution does not happen.
