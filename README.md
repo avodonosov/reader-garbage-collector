@@ -43,7 +43,7 @@ reading the forms:
 ```
 
 Creation and deletion of such a temporary garbage package
-can further be hidden in a function specified for the ':around-compile'
+can further be hidden in a function specified for the `:around-compile`
 ASDF option.
 
 This library provides such a function.
