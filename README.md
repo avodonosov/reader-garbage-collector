@@ -3,14 +3,14 @@
 People tend to use uninterned symbols in Common Lisp package definitions:
 
 ```common-lisp
-    (defpackage #:my-pkg  (:export #:func-1 #:func2) (:use #:cl))
+    (defpackage #:my-pkg  (:export #:func-1 #:func-2) (:use #:cl))
     (in-package #:my-pkg)
 ```
 
 But Common Lisp supports usual symbols:
 
 ```common-lisp
-    (defpackage my-pkg (:export func-1 func2) (:use cl))
+    (defpackage my-pkg (:export func-1 func-2) (:use cl))
     (in-package my-pkg)
 ```
 and that is more readable, in my opinion.
@@ -24,10 +24,10 @@ with `some-function` in other files - the `#:` confuses the search.
 
 The reason people use uninterned symbols is to avoid pollution of their
 current package, or keyword package, with the symbols interned
-when reader reads the defpacakge / in-package froms.
+when reader reads the defpacakge / in-package forms.
 
 We could avoid this pollution while still keeping the usual (interned)
-sybmols by switching to a temporary package while
+symbols by switching to a temporary package while
 reading the forms:
 
 ```common-lisp
@@ -39,7 +39,7 @@ reading the forms:
 
     (cl:defpackage my-pkg
       (:export func-1
-               func2)
+               func-2)
       (:use cl))
 
     ;; reader GC
@@ -72,7 +72,7 @@ How to use it:
 
     (cl:defpackage my-pkg
       (:export func-1
-               func2)
+               func-2)
       (:use cl))
 
 
@@ -90,7 +90,7 @@ Further Thoughts.
 
 Common Lisp could do that automatically. If symbol does not have a
 binding (function binding, value binding, or other), and is not
-reachable from any GC root other than a packge object,
+reachable from any GC root other than a package object,
 the symbol can be garbage collected, uninterning if necessary.
 
 In other words, simply being interned into a package should
@@ -110,12 +110,12 @@ I may be missing something. Maybe there are good reasons to not have
 it in the language.
 
 More practically, ASDF could probably include such a call-with-garbage-package
-functionaly out of box, and probably even use it around compilation
+functionality out of box, and probably even use it around compilation
 by default.
 
 Another though. Maybe readability is so more important than pollution,
 that it's better to stick to usual symbols even without bothering
-for any anti-pollution measures. Escpecially taking into account
+for any anti-pollution measures. Especially taking into account
 this pollution only happens when the system is compiled,
 i.e. loaded first time. Next time, when existing .fasl files
 are just loaded, the pollution does not happen.
