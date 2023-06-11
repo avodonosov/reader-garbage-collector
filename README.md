@@ -19,8 +19,8 @@ The reason people use uninterned symbols is to avoid pollution of their
 current package, or keyword package, with the symbols interned
 when reader reads the defpacakge / in-package froms.
 
-This pollution due to usual (interned) sybmols could
-be avoided by using a temporary package while
+We could avoid this pollution while still keeping the usual (interned)
+sybmols could by switching to a temporary package while
 reading the forms:
 
 ```common-lisp
