@@ -63,7 +63,7 @@ How to use it:
 
     (defsystem "my-system"
                 :depends-on ("reader-garbage-collector" ... )
-                :around-compile "reader-gc:call-with-gargage-package"
+                :around-compile "reader-gc:call-with-garbage-package"
                   ...
                 )
 
@@ -83,7 +83,7 @@ which prevents the pollution, in contrast to test-systems/bad-system.asd.
 Also see how they are tested in test.lisp.
 
 What is the most appropriate name for this functionality?
-Is it really a "reader gargage collector",
+Is it really a "reader garbage collector",
 or maybe it's a "symbol pollution sink"? Something else?
 
 Further Thoughts.
@@ -91,13 +91,13 @@ Further Thoughts.
 Common Lisp could do that automatically. If symbol does not have a
 binding (function binding, value binding, or other), and is not
 reachable from any GC root other than a packge object,
-the symbol can be gargage collected, uninterning if necessary.
+the symbol can be garbage collected, uninterning if necessary.
 
 In other words, simply being interned into a package should
-not prevent symbol from being gargage collected.
+not prevent symbol from being garbage collected.
 
 A special function (gc-symbols &optional package) could be provided
-for user to invoke this process at any time, without waiting for gargage
+for user to invoke this process at any time, without waiting for garbage
 collector to be fired automatically.
 
 The (gc-symbols *package*) could be invoked at every iteration
@@ -109,7 +109,7 @@ The compile-file function could also call (gc-symbols *package*) in the end.
 I may be missing something. Maybe there are good reasons to not have
 it in the language.
 
-More practically, ASDF could probably include such a call-with-gargage-package
+More practically, ASDF could probably include such a call-with-garbage-package
 functionaly out of box, and probably even use it around compilation
 by default.
 
