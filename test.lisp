@@ -2,12 +2,13 @@
 
 (require :asdf)
 
-(let* ((base-dir (or (make-pathname :directory (pathname-directory *load-truename*))
-                      #P"/home/anton/my/prj/reader-garbage-collector/"))
-       (asdf:*central-registry* (cons (merge-pathnames "test-systems/"
-                                                       base-dir)
-                                      (cons base-dir
-                                            asdf:*central-registry*))))
+(let* ((base-dir (or (and *load-truename*
+                          (make-pathname :directory (pathname-directory *load-truename*)))
+                     #P"/home/anton/my/prj/reader-garbage-collector/"))
+       (asdf:*central-registry* (append (list base-dir
+                                              (merge-pathnames "test-systems/"
+                                                               base-dir))
+                                        asdf:*central-registry*)))
   (asdf:load-system "good-system")
   (asdf:load-system "bad-system")
   )
