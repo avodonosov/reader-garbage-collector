@@ -70,7 +70,7 @@ How to use it:
 
     ;;;; package.lisp
 
-    (cl:defpackage my-pkg
+    (defpackage my-pkg
       (:export func-1
                func-2)
       (:use cl))
