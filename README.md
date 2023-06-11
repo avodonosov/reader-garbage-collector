@@ -9,7 +9,7 @@ People tend to use uninterned symbols in Common Lisp package definitions:
 
 But Common Lisp supports usual symbols:
 
-```
+```common-lisp
     (defpackage my-pkg (:export func-1 func2) (:use cl))
     (in-package my-pkg)
 ```
@@ -43,7 +43,7 @@ reading the forms:
 ```
 
 Creation and deletion of such a temporary garbage package
-can further be hidden in a function specified for the :around-compile
+can further be hidden in a function specified for the ':around-compile'
 ASDF option.
 
 This library provides such a function.
