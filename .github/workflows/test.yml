@@ -1,0 +1,78 @@
+name: 'Test reader-garbage-collector'
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+
+# This allows a subsequently queued workflow run to interrupt previous runs.
+# github.workflow is the name of the workflow.
+#   If the workflow file doesn't specify a name,
+#   the value of this property is the full path of the workflow
+#   file in the repository.
+# github.head_ref is source branch of a pull_request
+# github.ref is the pushed branch
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  test-reader-garbage-collector:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉🐧🔎💡🍏"
+      - run: echo "event = ${{ github.event_name }}; runner.os = ${{ runner.os }}; branch = ${{ github.ref }}"
+      - run: mkdir ${{ github.workspace }}/docker-home
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.workspace }}/docker-home/reader-garbage-collector
+      - name: List files in the repository
+        run: |
+          pwd
+          ls ${{ github.workspace }}/docker-home/reader-garbage-collector
+      - run: echo "This job's status is ${{ job.status }}."
+      - name: Ask the clfoundation/cl-devel docker image to fill the directory we mount to it as /home/cl with default config (init files for lisps, quiclisp, etc)
+        run: |
+          docker run -u "$(id -u):$(id -g)" -i --mount type=bind,source=${{ github.workspace }}/docker-home,target=/home/cl/ clfoundation/cl-devel:2022-02-09 unpack-default-home-dir
+###############################################################################
+#
+# The combinations below are generated with test-gen-matrix.lisp
+#
+# Because we don't want to run every test in a separate job,
+# as that would be much more computationally expensive -
+# download docker image every time.
+#
+# Also it's more convenient to use familiar language for
+# the test matrix specification rather than studying
+# the Github Actions possibilities for that.
+#
+###############################################################################
+      - run: |
+           LISP=sbcl docker-home/reader-garbage-collector/.github/workflows/test.sh
+        timeout-minutes: 1
+        if: success() || failure()
+      - uses: nick-fields/retry@v2.8.2
+        name: Run with retries LISP=ccl docker-home/reader-garbage-collector/.github/workflows/test.sh < /dev/null
+        with:
+          command: |
+             LISP=ccl docker-home/reader-garbage-collector/.github/workflows/test.sh < /dev/null
+          timeout_minutes: 1
+          max_attempts: 3
+          retry_on: error
+          retry_on_exit_code: 137
+        if: success() || failure()
+      - run: |
+           LISP=abcl docker-home/reader-garbage-collector/.github/workflows/test.sh
+        timeout-minutes: 1
+        if: success() || failure()
+      - run: |
+           LISP=clisp docker-home/reader-garbage-collector/.github/workflows/test.sh
+        timeout-minutes: 1
+        if: success() || failure()
