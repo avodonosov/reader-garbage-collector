@@ -23,7 +23,6 @@
 (in-package #:reader-gc)
 
 (defun call-with-garbage-package-named (pkg-name body-fn)
-  
   (let* ((pkg (or (find-package pkg-name)
                   ;; TODO: warn if the package exists?
                   (make-package pkg-name :use :cl))))
@@ -35,8 +34,6 @@
     
     (delete-package pkg)
     ))
-
-;; (call-with-garbage-package-named "test-pkg" (lambda () (+ 1 2)))
 
 (defun call-with-garbage-package (body-fn)
   (call-with-garbage-package-named '#:default-reader-garbage-package
