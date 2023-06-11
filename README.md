@@ -15,6 +15,13 @@ But Common Lisp supports usual symbols:
 ```
 and that is more readable, in my opinion.
 
+An added bonus of usual symbol names in defpackage is that at GitHub,
+when you click a symbol, GitHub pops-up on the right of the screen
+all mentions of that symbol in the repo, so reader can quickly find
+the definition for the symbol. This does not work for uninterned
+symbols, because the search fails to match `#:some-function` in defpackage
+with `some-function` in other files - the `#:` confuses the search.
+
 The reason people use uninterned symbols is to avoid pollution of their
 current package, or keyword package, with the symbols interned
 when reader reads the defpacakge / in-package froms.
@@ -109,10 +116,3 @@ by default.
 Another though. Maybe readability is so more important than pollution,
 that it's better to stick to usual symbols even without bothering
 for any anti-pollution measures.
-
-An added bonus of usual symbol names in defpackage is that at GitHub,
-when you click a symbol, GitHub pops-up on the right of the screen
-all mentions of that symbol in the repo, so reader can quickly find
-the definition for the symbol. This does not work for uninterned
-symbols, because the search fails to match "#:some-function" in defpackage
-with "some-function" in other files - the #: confuses the search.
