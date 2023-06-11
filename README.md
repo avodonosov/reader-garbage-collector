@@ -71,13 +71,13 @@ How to use it:
 
 ```
 
-For a runnable example, see test-systems/good-system.asd
+For a runnable example see test-systems/good-system.asd
 which prevents the pollution, in contrast to test-systems/bad-system.asd.
 Also see how they are tested in test.lisp.
 
 What is the most appropriate name for this functionality?
 Is it really a "reader gargage collector",
-or maybe it's a "symbol pollution synk"? Something else?
+or maybe it's a "symbol pollution sink"? Something else?
 
 Further Thoughts.
 
