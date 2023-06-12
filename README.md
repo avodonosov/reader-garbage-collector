@@ -1,4 +1,4 @@
-[An idea for now. Comments are welcome.]
+[Just an idea for now. Comments are welcome. Known issue #2.]
 
 People tend to use uninterned symbols in Common Lisp package definitions:
 
@@ -118,4 +118,12 @@ that it's better to stick to usual symbols even without bothering
 for any anti-pollution measures. Especially that
 this pollution only happens when the system is compiled,
 i.e. loaded first time. Next time, when existing .fasl files
-are just loaded without compilation, the pollution does not happen.
+are just loaded without compilation, the pollution does not happen,
+if lisp implementation follows the CLHS reccomendation:
+
+> The macroexpansion of defpackage could usefully canonicalize
+  the names into strings, so that even if a source file has
+  random symbols in the defpackage form, the compiled file would
+  only contain strings.
+
+http://clhs.lisp.se/Body/m_defpkg.htm
