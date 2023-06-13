@@ -1,4 +1,5 @@
-[Just an idea for now. Comments are welcome. Known issue [#2](issues/2).]
+[Just an idea for now. Comments are welcome.
+Known issue [#2](https://github.com/avodonosov/reader-garbage-collector/issues/2).]
 
 People tend to use uninterned symbols in Common Lisp package definitions:
 
