@@ -12,7 +12,7 @@ set -v
 
 cd "`dirname $0`"
 
-MAIN='(handler-case (load "test.lisp") (serious-condition (c) (format t "~A: ~A~%" (type-of c) c) (asdf/driver:print-backtrace :condition c :count 9999) (uiop:quit 1)))'
+MAIN='(handler-bind ((serious-condition (lambda (c) (format t "~A: ~A~%" (type-of c) c) (asdf/driver:print-backtrace :condition c :count 9999) (uiop:quit 1)))) (load "test.lisp"))'
 
 case $LISP in
     clisp)
